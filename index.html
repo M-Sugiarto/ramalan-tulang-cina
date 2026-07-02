@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ramalan Tulang Cina - Bone Weight Fortune (称骨算命)</title>
+    <meta name="description" content="Ramalan Tulang Cina - Hitung nasib berdasarkan berat tulang dengan kalender lunar akurat 100%. Tool hiburan terinspirasi dari cerita teman.">
+    <meta name="keywords" content="ramalan tulang, bone weight fortune, 称骨算命, chinese fortune, yuan tiangang, mozes sugiarto">
+    <meta name="author" content="Mozes Sugiarto">
+    
+    <!-- ✅ Library Lunar Calendar (CDN - Gratis & Akurat 100%) -->
+    <script src="https://cdn.jsdelivr.net/npm/lunar-javascript@1.6.12/lunar.min.js"></script>
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 0;
+            padding-top: 40px;
+        }
+
+        /* ===== RUNNING TEXT DISCLAIMER ===== */
+        .running-text-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(90deg, #d63031, #e17055, #d63031);
+            color: white;
+            z-index: 9999;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            overflow: hidden;
+            height: 40px;
+            display: flex;
+            align-items: center;
+        }
+
+        .running-text-content {
+            display: inline-block;
+            white-space: nowrap;
+            animation: scrollText 50s linear infinite;
+            padding-left: 100%;
+            font-weight: 500;
+            font-size: 0.95em;
+        }
+
+        .running-text-content span {
+            margin: 0 30px;
+        }
+
+        .running-text-content .separator {
+            color: #ffeaa7;
+            font-weight: bold;
+        }
+
+        @keyframes scrollText {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .running-text-wrapper:hover .running-text-content {
+            animation-play-state: paused;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .form-group { margin-bottom: 20px; }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            header h1 { font-size: 1.8em; }
+            .running-text-content { font-size: 0.85em; }
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .result-section {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .bone-weight-display {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 12px;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .bone-weight-value {
+            font-size: 3em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .calculation-details {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+            flex-wrap: wrap;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .original-text {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #ffc107;
+        }
+
+        .original-text h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .hanzi-text {
+            font-size: 1.3em;
+            line-height: 2;
+            color: #333;
+            margin-bottom: 10px;
+            font-family: 'SimSun', 'STSong', 'Noto Serif SC', serif;
+        }
+
+        .pinyin-text {
+            font-style: italic;
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+
+        .fortune-text {
+            background: #fff9e6;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+            margin-bottom: 20px;
+        }
+
+        .fortune-text h3 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .fortune-text p {
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #2196F3;
+        }
+
+        .info-box p {
+            color: #0c5460;
+            line-height: 1.6;
+        }
+
+        .story-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #e17055;
+            font-style: italic;
+        }
+
+        .story-box h4 {
+            color: #d63031;
+            margin-bottom: 10px;
+            font-style: normal;
+            font-size: 1.1em;
+        }
+
+        .story-box p {
+            color: #2d3436;
+            line-height: 1.8;
+        }
+
+        .library-status {
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+            text-align: center;
+        }
+
+        .library-status.loaded { background: #d4edda; color: #155724; }
+        .library-status.error { background: #f8d7da; color: #721c24; }
+        .library-status.loading { background: #fff3cd; color: #856404; }
+
+        .time-info {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            border-left: 4px solid #ffc107;
+            display: none;
+        }
+
+        .time-info.show { display: block; }
+
+        .time-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .time-table th, .time-table td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .time-table th { background: #f8f9fa; }
+
+        .input-hint {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .shichen-display {
+            background: #e8f5e9;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .shichen-display.show { display: block; }
+        .shichen-display strong { color: #2e7d32; }
+
+        .lunar-converter {
+            background: #f0f4ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #667eea;
+        }
+
+        .lunar-converter h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .lunar-result {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+            border-left: 4px solid #28a745;
+        }
+
+        .lunar-result.show { display: block; }
+        .lunar-result p { margin: 5px 0; color: #333; }
+        .lunar-result strong { color: #667eea; }
+
+        .divider {
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #ddd;
+        }
+
+        .divider span {
+            background: white;
+            padding: 0 15px;
+            position: relative;
+            color: #999;
+            font-size: 0.9em;
+        }
+
+        /* ===== SUPPORT NOTE ===== */
+        .support-note {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            border: 2px dashed #e17055;
+        }
+
+        .support-note h4 {
+            color: #d63031;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .support-note p {
+            color: #2d3436;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .support-note a {
+            display: inline-block;
+            padding: 12px 25px;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .trakteer-btn {
+            background: linear-gradient(135deg, #e17055 0%, #d63031 100%);
+        }
+
+        .sociabuzz-btn {
+            background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
+        }
+
+        .support-note a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        /* ===== MODAL ===== */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+
+        .modal-overlay.show { display: flex; }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2em;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .support-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .support-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            color: white;
+        }
+
+        .support-btn.trakteer {
+            background: linear-gradient(135deg, #e17055 0%, #d63031 100%);
+        }
+
+        .support-btn.sociabuzz {
+            background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
+        }
+
+        .support-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        /* ===== FOOTER DISCLAIMER ===== */
+        .footer-disclaimer {
+            background: rgba(255,255,255,0.95);
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            font-size: 0.9em;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .footer-disclaimer h4 {
+            color: #d63031;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .footer-disclaimer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .footer-disclaimer a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding: 20px;
+            color: white;
+            font-size: 0.85em;
+            opacity: 0.9;
+        }
+
+        .footer-bottom a {
+            color: #ffeaa7;
+            text-decoration: none;
+        }
+
+        .heart-icon {
+            color: #e17055;
+            animation: pulse 1.5s infinite;
+            display: inline-block;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== RUNNING TEXT DISCLAIMER ===== -->
+    <div class="running-text-wrapper">
+        <div class="running-text-content">
+            <span>⚠️ DISCLAIMER:</span>
+            <span>Tool ini 100% GRATIS & Open Source (MIT License)</span>
+            <span class="separator">★</span>
+            <span>Donasi bersifat SUKARELA & TIDAK WAJIB</span>
+            <span class="separator">★</span>
+            <span>Ramalan hanya untuk HIBURAN, bukan keputusan hidup</span>
+            <span class="separator">★</span>
+            <span>Software disediakan "AS IS" tanpa garansi</span>
+            <span class="separator">★</span>
+            <span>☕ Support: Trakteer & SociaBuzz</span>
+            <span class="separator">★</span>
+            <span>© 2026 Mozes Sugiarto - Licensed under MIT</span>
+            <span class="separator">★</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>🦴 Ramalan Tulang Cina</h1>
+            <p>Bone Weight Fortune Telling (称骨算命) - Hitung nasib berdasarkan berat tulang</p>
+        </header>
+
+        <div class="card">
+            <!-- Story Box - Narasi Inspirasi -->
+            <div class="story-box">
+                <h4>💭 Cerita di Balik Tool Ini</h4>
+                <p>
+                    Awalnya, saya hanya iseng mendengar cerita dari seorang teman yang sangat tertarik dengan ramalan tulang Cina (称骨算命). 
+                    Dia bercerita bagaimana metode kuno dari Dinasti Tang ini menghitung "berat tulang" seseorang berdasarkan tanggal dan waktu lahir, 
+                    lalu memberikan ramalan yang konon bisa menggambarkan perjalanan hidup.
+                    <br><br>
+                    Penasaran dengan keakuratan dan cara perhitungannya, saya akhirnya memutuskan untuk membuat tool ini — 
+                    bukan untuk dipercaya secara serius, tapi lebih sebagai <strong>hiburan</strong> dan sarana untuk melestarikan 
+                    pengetahuan budaya Timur yang menarik ini.
+                    <br><br>
+                    <em>— Mozes Sugiarto</em>
+                </p>
+            </div>
+
+            <div class="info-box">
+                <p><strong>Tentang Ramalan Tulang:</strong> Metode kuno Tiongkok dari Dinasti Tang oleh 袁天罡 (Yuan Tiangang). Menghitung "berat tulang" berdasarkan tanggal & waktu lahir dalam kalender lunar.</p>
+            </div>
+
+            <div class="library-status loading" id="libraryStatus">
+                ⏳ Memuat library kalender lunar...
+            </div>
+
+            <div class="lunar-converter">
+                <h3>📅 Konversi Tanggal Masehi ke Lunar</h3>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label for="gregorianDate">Tanggal Lahir (Masehi)</label>
+                        <input type="date" id="gregorianDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="gregorianHour">Jam Lahir (24 Jam)</label>
+                        <input type="number" id="gregorianHour" min="0" max="23" placeholder="Contoh: 14">
+                    </div>
+                </div>
+                <button type="button" onclick="convertToLunar()" style="background: #28a745;">🔄 Konversi ke Kalender Lunar</button>
+                
+                <div class="lunar-result" id="lunarResult">
+                    <p><strong>Tahun Lunar:</strong> <span id="lunarYear">-</span></p>
+                    <p><strong>Bulan Lunar:</strong> <span id="lunarMonth">-</span></p>
+                    <p><strong>Hari Lunar:</strong> <span id="lunarDay">-</span></p>
+                    <p><strong>Jam Shichen:</strong> <span id="lunarHour">-</span></p>
+                    <button type="button" onclick="autoFillForm()" style="background: #17a2b8; margin-top: 10px;">✨ Isi Otomatis ke Form</button>
+                </div>
+            </div>
+
+            <div class="divider"><span>ATAU ISI MANUAL</span></div>
+
+            <form id="fortuneForm">
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label for="birthYear">Tahun Lahir (Lunar)</label>
+                        <select id="birthYear" required>
+                            <option value="">Pilih Tahun</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="birthMonth">Bulan Lahir (Lunar)</label>
+                        <select id="birthMonth" required>
+                            <option value="">Pilih Bulan</option>
+                            <option value="1">Bulan 1 (Cia Gwee)</option>
+                            <option value="2">Bulan 2 (Ji Gwee)</option>
+                            <option value="3">Bulan 3 (Sa Gwee)</option>
+                            <option value="4">Bulan 4 (Si Gwee)</option>
+                            <option value="5">Bulan 5 (Go Gwee)</option>
+                            <option value="6">Bulan 6 (Lak Gwee)</option>
+                            <option value="7">Bulan 7 (Cit Gwee)</option>
+                            <option value="8">Bulan 8 (Peh Gwee)</option>
+                            <option value="9">Bulan 9 (Kao Gwee)</option>
+                            <option value="10">Bulan 10 (Cap Gwee)</option>
+                            <option value="11">Bulan 11 (Capit Gwee)</option>
+                            <option value="12">Bulan 12 (Capji Gwee)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label for="birthDay">Hari Lahir (Lunar)</label>
+                        <select id="birthDay" required>
+                            <option value="">Pilih Hari</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="birthHour">Jam Lahir (24 Jam)</label>
+                        <input type="number" id="birthHour" min="0" max="23" required>
+                        <p class="input-hint">0-23 (14 = jam 2 siang)</p>
+                        <div class="shichen-display" id="shichenDisplay">
+                            <strong>Shichen:</strong> <span id="shichenName">-</span> (<span id="shichenTime">-</span>)
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" onclick="showTimeTable()" style="background: #28a745; margin-bottom: 20px;">📋 Lihat Tabel Shichen</button>
+
+                <div class="time-info" id="timeInfo">
+                    <h4>🕐 Tabel Konversi Jam ke Shichen (时辰)</h4>
+                    <table class="time-table">
+                        <thead>
+                            <tr><th>Jam</th><th>Shichen</th><th>Zodiak</th></tr>
+                        </thead>
+                        <tbody id="timeTableBody"></tbody>
+                    </table>
+                </div>
+
+                <button type="submit">🔮 Hitung Ramalan Tulang</button>
+            </form>
+        </div>
+
+        <div class="card result-section" id="resultSection">
+            <div class="bone-weight-display">
+                <h2>Berat Tulang Anda</h2>
+                <div class="bone-weight-value" id="boneWeightValue">0 Liang</div>
+                <p id="boneWeightText"></p>
+            </div>
+
+            <div class="calculation-details">
+                <h3>Detail Perhitungan</h3>
+                <div class="detail-row"><span>Tahun:</span><span id="yearWeight">-</span></div>
+                <div class="detail-row"><span>Bulan:</span><span id="monthWeight">-</span></div>
+                <div class="detail-row"><span>Hari:</span><span id="dayWeight">-</span></div>
+                <div class="detail-row"><span>Jam (<span id="hourShichenName">-</span>):</span><span id="hourWeight">-</span></div>
+                <div class="detail-row"><span>Total:</span><span id="totalWeight">-</span></div>
+            </div>
+
+            <div class="original-text" id="originalTextSection" style="display:none;">
+                <h4>📜 Teks Asli 称骨歌 (Cheng Gu Ge)</h4>
+                <div class="hanzi-text" id="hanziText"></div>
+                <div class="pinyin-text" id="pinyinText"></div>
+            </div>
+
+            <div class="fortune-text">
+                <h3>🔮 Terjemahan Bahasa Indonesia</h3>
+                <p id="fortuneDescription"></p>
+            </div>
+
+            <div class="support-note">
+                <h4><span class="heart-icon">❤️</span> Senang dengan hasilnya?</h4>
+                <p>Jika tool ini menghibur Anda, Anda bisa mendukung pengembangan melalui platform berikut. Donasi bersifat <strong>SUKARELA</strong> dan <strong>TIDAK WAJIB</strong>.</p>
+                <div class="btn-group">
+                    <a href="https://trakteer.id/mozwanted/tip" target="_blank" rel="noopener noreferrer" class="trakteer-btn">☕ Trakteer (QRIS - Indonesia)</a>
+                    <a href="https://sociabuzz.com/mozwanted" target="_blank" rel="noopener noreferrer" class="sociabuzz-btn">💳 SociaBuzz (Global)</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== FOOTER DISCLAIMER ===== -->
+        <div class="footer-disclaimer">
+            <h4>⚠️ Disclaimer Lengkap</h4>
+            <p><strong>1. Status Tool:</strong> Tool ini 100% GRATIS dan open source di bawah <a href="https://opensource.org/licenses/MIT" target="_blank">MIT License</a>. Anda bebas menggunakan, memodifikasi, dan mendistribusikannya.</p>
+            <p><strong>2. Donasi Sukarela:</strong> Donasi melalui Trakteer & SociaBuzz bersifat <strong>SUKARELA</strong> dan <strong>TIDAK WAJIB</strong>. Anda tetap bisa menggunakan tool ini sepenuhnya tanpa donasi. Donasi bukan pembelian software atau garansi apapun.</p>
+            <p><strong>3. Hiburan Saja:</strong> Ramalan tulang (称骨算命) adalah metode tradisional Tiongkok kuno yang disediakan <strong>HANYA UNTUK HIBURAN</strong>. Jangan gunakan hasil ramalan sebagai dasar pengambilan keputusan penting dalam hidup (keuangan, kesehatan, karir, dll).</p>
+            <p><strong>4. No Warranty:</strong> Software disediakan "AS IS" tanpa garansi apapun, baik tersurat maupun tersirat. Author tidak bertanggung jawab atas kerugian atau kerusakan akibat penggunaan tool ini.</p>
+            <p><strong>5. Akurasi Data:</strong> Konversi kalender lunar menggunakan library <a href="https://github.com/6tail/lunar-javascript" target="_blank">lunar-javascript</a> (MIT License). Data ramalan berdasarkan teks klasik 袁天罡称骨歌.</p>
+            <p><strong>6. Kontak:</strong> Untuk pertanyaan, saran, atau bug report, silakan hubungi melalui GitHub repository atau platform donasi.</p>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 <strong>Mozes Sugiarto</strong> | Licensed under <a href="https://opensource.org/licenses/MIT" target="_blank">MIT License</a></p>
+            <p style="margin-top: 5px;">Powered by <a href="https://github.com/6tail/lunar-javascript" target="_blank">lunar-javascript</a></p>
+            <p style="margin-top: 10px;">
+                ☕ <a href="https://trakteer.id/mozwanted/tip" target="_blank">Trakteer</a> | 
+                💳 <a href="https://sociabuzz.com/mozwanted" target="_blank">SociaBuzz</a>
+            </p>
+            <p style="margin-top: 10px; font-size: 0.9em;">Made with ❤️ in Indonesia</p>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="supportModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <h2 style="text-align:center; color:#667eea; margin-bottom: 10px;">☕ Support Project</h2>
+            <p style="text-align:center; color:#666; margin-bottom: 20px;">
+                Tool ini GRATIS. Jika terbantu, pertimbangkan untuk mendukung (opsional, tidak wajib).
+            </p>
+            <div class="support-options">
+                <a href="https://trakteer.id/mozwanted/tip" target="_blank" rel="noopener noreferrer" class="support-btn trakteer">
+                    🇮🇩 Trakteer (QRIS - Indonesia)
+                </a>
+                <a href="https://sociabuzz.com/mozwanted" target="_blank" rel="noopener noreferrer" class="support-btn sociabuzz">
+                    💳 SociaBuzz (Indonesia + Global)
+                </a>
+            </div>
+            <p style="text-align:center; font-size: 0.85em; color: #999; margin-top: 15px;">
+                ⚠️ Donasi sukarela, tidak wajib. Terima kasih! ❤️
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // ✅ DATA PERHITUNGAN TULANG
+        // ============================================
+        
+        const yearWeightsQian = {
+            1924: 12, 1925: 9, 1926: 6, 1927: 7, 1928: 12,
+            1929: 5, 1930: 9, 1931: 7, 1932: 14, 1933: 5,
+            1934: 15, 1935: 9, 1936: 12, 1937: 8, 1938: 8,
+            1939: 19, 1940: 12, 1941: 19, 1942: 6, 1943: 7,
+            1944: 15, 1945: 15, 1946: 18, 1947: 9, 1948: 15,
+            1949: 7, 1950: 9, 1951: 12, 1952: 10, 1953: 7,
+            1954: 15, 1955: 12, 1956: 16, 1957: 9, 1958: 14,
+            1959: 9, 1960: 7, 1961: 7, 1962: 9, 1963: 12,
+            1964: 7, 1965: 15, 1966: 13, 1967: 5, 1968: 14,
+            1969: 5, 1970: 9, 1971: 19, 1972: 5, 1973: 7,
+            1974: 12, 1975: 15, 1976: 8, 1977: 6, 1978: 19,
+            1979: 6, 1980: 7, 1981: 7, 1982: 10, 1983: 6,
+            1984: 12, 1985: 9, 1986: 6, 1987: 7, 1988: 16,
+            1989: 7, 1990: 9, 1991: 7, 1992: 14, 1993: 5,
+            1994: 15, 1995: 9, 1996: 12, 1997: 8, 1998: 8,
+            1999: 19, 2000: 12, 2001: 19, 2002: 6, 2003: 7,
+            2004: 15, 2005: 15, 2006: 18, 2007: 9, 2008: 15,
+            2009: 7, 2010: 9, 2011: 12, 2012: 10, 2013: 7,
+            2014: 15, 2015: 12, 2016: 16, 2017: 9, 2018: 14,
+            2019: 9, 2020: 7, 2021: 7, 2022: 9, 2023: 12,
+            2024: 7, 2025: 15, 2026: 13, 2027: 5, 2028: 14,
+            2029: 5, 2030: 9, 2031: 19, 2032: 5, 2033: 7,
+            2034: 12, 2035: 15, 2036: 8, 2037: 6, 2038: 19,
+            2039: 6, 2040: 7, 2041: 7, 2042: 10, 2043: 6
+        };
+
+        const monthWeightsQian = {
+            1: 6, 2: 7, 3: 18, 4: 9,
+            5: 5, 6: 16, 7: 9, 8: 15,
+            9: 18, 10: 8, 11: 9, 12: 5
+        };
+
+        const dayWeightsQian = {
+            1: 5, 2: 10, 3: 8, 4: 15, 5: 16, 6: 15, 7: 8, 8: 16,
+            9: 8, 10: 16, 11: 9, 12: 17, 13: 8, 14: 17, 15: 10, 16: 8,
+            17: 9, 18: 18, 19: 5, 20: 15, 21: 10, 22: 9, 23: 8, 24: 9,
+            25: 15, 26: 18, 27: 7, 28: 8, 29: 16, 30: 6
+        };
+
+        const hourWeightsQian = {
+            1: 16, 2: 6, 3: 7, 4: 10, 5: 9, 6: 16,
+            7: 10, 8: 8, 9: 8, 10: 9, 11: 6, 12: 6
+        };
+
+        const shichenMap = [
+            { start: 23, end: 1, shichen: 1, name: "Zi (子)", zodiac: "Tikus", time: "23:00-01:00" },
+            { start: 1, end: 3, shichen: 2, name: "Chou (丑)", zodiac: "Kerbau", time: "01:00-03:00" },
+            { start: 3, end: 5, shichen: 3, name: "Yin (寅)", zodiac: "Macan", time: "03:00-05:00" },
+            { start: 5, end: 7, shichen: 4, name: "Mao (卯)", zodiac: "Kelinci", time: "05:00-07:00" },
+            { start: 7, end: 9, shichen: 5, name: "Chen (辰)", zodiac: "Naga", time: "07:00-09:00" },
+            { start: 9, end: 11, shichen: 6, name: "Si (巳)", zodiac: "Ular", time: "09:00-11:00" },
+            { start: 11, end: 13, shichen: 7, name: "Wu (午)", zodiac: "Kuda", time: "11:00-13:00" },
+            { start: 13, end: 15, shichen: 8, name: "Wei (未)", zodiac: "Kambing", time: "13:00-15:00" },
+            { start: 15, end: 17, shichen: 9, name: "Shen (申)", zodiac: "Monyet", time: "15:00-17:00" },
+            { start: 17, end: 19, shichen: 10, name: "You (酉)", zodiac: "Ayam", time: "17:00-19:00" },
+            { start: 19, end: 21, shichen: 11, name: "Xu (戌)", zodiac: "Anjing", time: "19:00-21:00" },
+            { start: 21, end: 23, shichen: 12, name: "Hai (亥)", zodiac: "Babi", time: "21:00-23:00" }
+        ];
+
+        // Data ramalan lengkap (Hanzi + Pinyin + Terjemahan)
+        const fortuneReadings = {
+            "2.1": {
+                hanzi: "短命非业谓大空，一生灾难事事穷。\n招灾揽祸遭危难，独度时光苦愁容。",
+                pinyin: "Duǎn mìng fēi yè wèi dà kōng, yīshēng zāinàn shìshì qióng.\nZhāo zāi lǎn huò zāo wēinàn, dú dù shíguāng kǔ chóuróng.",
+                translation: "Umur pendek, tanpa karir, kehidupan sangat miskin. Bencana datang bertubi-tubi, hidup sendiri dalam kesedihan dan kemiskinan."
+            },
+            "2.2": {
+                hanzi: "身寒骨冷苦伶仃，此命推来行乞人。\n劳劳碌碌无度日，俯首弯腰过一生。",
+                pinyin: "Shēn hán gǔ lěng kǔ língdīng, cǐ mìng tuī lái xíngqǐ rén.\nLáoláo lùlù wú dù rì, fǔshǒu wānyāo guò yīshēng.",
+                translation: "Tangan dingin, tulang dingin, susahnya bukan main. Peruntungan ini mendorong jadi pengemis. Membanting tulang untuk melewati hari akhirnya secara membungkuk-bungkuk untuk hidup."
+            },
+            "2.3": {
+                hanzi: "此命推来骨轻轻，求谋作事事难成。\n弟兄妻子难依靠，他乡流浪作乞人。",
+                pinyin: "Cǐ mìng tuī lái gǔ qīngqīng, qiú móu zuò shì shì nán chéng.\nDìxiōng qīzǐ nán yīkào, tāxiāng liúlàng zuò qǐ rén.",
+                translation: "Peruntungan ini tulangnya sangat ringan. Berusaha kerja, kerja pun susah jadinya. Sanak saudara, istri dan saudara susah diandalkan. Pindah ke lain kampung jadi gelandangan."
+            },
+            "2.4": {
+                hanzi: "此命推来福不轻，家内萧条树不成。\n六亲兄弟无依靠，移乡别井作闲人。",
+                pinyin: "Cǐ mìng tuī lái fú bù qīng, jiā nèi xiāotiáo shù bù chéng.\nLiùqīn xiōngdì wú yīkào, yí xiāng bié jǐng zuò xián rén.",
+                translation: "Peruntungan ini tidak mendatangkan rejeki. Di halaman rumah tidak terdapat pohon yang berhasil. Seluruh saudara tidak dapat diandalkan. Pindah ke lain kampung malah jadi orang tua nganggur."
+            },
+            "2.5": {
+                hanzi: "此命推来祖业差，门庭冷落苦生涯。\n六亲兄弟难依靠，一世辛勤劳碌夸。",
+                pinyin: "Cǐ mìng tuī lái zǔ yè chà, méntíng lěngluò kǔ shēngyá.\nLiùqīn xiōngdì nán yīkào, yīshì xīnqín láolù kuā.",
+                translation: "Nasib ini tidak dapat peninggalan harta warisan. Rumah tinggalnya seperti rumah kosong. Sanak saudara susah semua. Sepanjang hidupnya menanggung capai-lelah saja."
+            },
+            "2.6": {
+                hanzi: "平生衣禄苦中求，劳劳碌碌苦度秋。\n移居别处方安稳，勉强衣裳得周全。",
+                pinyin: "Píngshēng yī lù kǔ zhōng qiú, láoláo lùlù kǔ dù qiū.\nYí jū bié chù fāng ānwěn, miǎnqiǎng yīshang dé zhōuquán.",
+                translation: "Hidupnya berpakain saja susah payah. Berusaha terus-menerus tiada hentinya. Hingga pindah ke lain tempat, berdaya upaya akhirnya dapat berpakaian sekedarnya saja."
+            },
+            "2.7": {
+                hanzi: "一生行事似飘蓬，祖业田园在梦中。\n六亲兄弟难依靠，独马单枪过一生。",
+                pinyin: "Yīshēng xíngshì sì piāo péng, zǔ yè tiányuán zài mèng zhōng.\nLiùqīn xiōngdì nán yīkào, dú mǎ dān qiāng guò yīshēng.",
+                translation: "Sepanjang hidupnya bawa caranya sendiri saja. Tidak dapat leluhur untuk jadi sandaran. Dengan seekor kuda dan senjata pergi merantau. Dari muda hingga tua tidak dapat apa apa."
+            },
+            "2.8": {
+                hanzi: "一生作事似飘蓬，祖业家财在梦中。\n若问平生衣食计，必须过继改门风。",
+                pinyin: "Yīshēng zuò shì sì piāo péng, zǔ yè jiā cái zài mèng zhōng.\nRuò wèn píngshēng yī shí jì, bì xū guò jì gǎi mén fēng.",
+                translation: "Sepanjang hidup melakukan kerja seperti tertiup angin. Harta benda dari leluhur seperti dalam impian. Walaupun di Kwe Pang atau ganti nama Marga dan Nama harus ganti dua sampai tiga kali."
+            },
+            "2.9": {
+                hanzi: "初年运限未曾亨，纵有功名在后成。\n须待四旬方自立，移居改姓始安宁。",
+                pinyin: "Chū nián yùn xiàn wèi céng hēng, zòng yǒu gōngmíng zài hòu chéng.\nXū dài sì xún fāng zìlì, yí jū gǎi xìng shǐ ānníng.",
+                translation: "Umur muda batas nasib masih belum dirasakan. Lalu ada nama baik dapat jadi. Harus menunggu 4 tahun baru dapat berdiri sendiri. Pindah tempat menganti nama marga baru dapat diperbaiki."
+            },
+            "3.0": {
+                hanzi: "劳劳碌碌苦中求，东走西奔何日休。\n若使终身勤与俭，晚来衣禄可无忧。",
+                pinyin: "Láoláo lùlù kǔ zhōng qiú, dōng zǒu xī bēn hé rì xiū.\nRuò shǐ zhōngshēn qín yǔ jiǎn, wǎn lái yī lù kě wú yōu.",
+                translation: "Capai lelah dihidup dalam susah. Lari ke Selatan dan ke Barat tidak istirahat. Kalau mau bersusah payah, bekerja yang rajin dan hemat pada hari tuanya tidak usah merasa sedih."
+            },
+            "3.1": {
+                hanzi: "忙忙碌碌苦中求，何日云开见日头。\n难得基本成家业，中年衣食渐无忧。",
+                pinyin: "Mángmáng lùlù kǔ zhōng qiú, hé rì yún kāi jiàn rì tóu.\nNán dé jīběn chéng jiāyè, zhōngnián yī shí jiàn wú yōu.",
+                translation: "Capai repot mencari dalam susah sampai pada waktu awan terbuka dan matahari terlihat. Karena sukar dapat pondasi untuk berdiri sendiri. Pada umur pertengahan makan pakaian perlahan-lahan tercukupi."
+            },
+            "3.2": {
+                hanzi: "初年运蹇事难谋，渐有财源如水流。\n到得中年衣食旺，那时名利一齐收。",
+                pinyin: "Chū nián yùn jiǎn shì nán móu, jiàn yǒu cáiyuán rú shuǐ liú.\nDào dé zhōngnián yī shí wàng, nà shí mínglì yīqí shōu.",
+                translation: "Waktu muda usaha sukar berhasil, perlahan lahan ada sumber seperti air yang mengalir. Sampai pada umur pertengahan makan pakai cukup. Nah, pada waktu itulah nama dan hasil dapat diterima."
+            },
+            "3.3": {
+                hanzi: "初年运限未曾亨，纵有功名在后成。\n须待四旬方自立，移居改姓始安宁。",
+                pinyin: "Chū nián yùn xiàn wèi céng hēng, zòng yǒu gōngmíng zài hòu chéng.\nXū dài sì xún fāng zìlì, yí jū gǎi xìng shǐ ānníng.",
+                translation: "Pada waktu muda kerjapun sukar berhasil, segala daya upaya digunakan dengan kesungguhan hati. Begitu lama masih seperti air mengalir pergi, kemudian peruntungan bisa dapatkan keberuntungan."
+            },
+            "3.4": {
+                hanzi: "此命福气果如何，移祖过房衣食多。\n末限运来方称意，平生劳碌苦中磨。",
+                pinyin: "Cǐ mìng fúqì guǒ rúhé, yí zǔ guò fáng yī shí duō.\nMò xiàn yùn lái fāng chèn yì, píngshēng láolù kǔ zhōng mó.",
+                translation: "Peruntungan ini rejekinya tidak dapat diterka bagaimana. Di rumah banyak tersedia pakaian orang suci. Berpisah dari orang tua/ keluar rumah baru dapat menjadi baik. Akhirnya tokh akan berdoa Omitofo."
+            },
+            "3.5": {
+                hanzi: "生平衣禄不周全，祖业微消付渺然。\n劳碌营为终有望，晚来福禄自安然。",
+                pinyin: "Shēngpíng yī lù bù zhōuquán, zǔ yè wēi xiāo fù miǎorán.\nLáolù yíng wéi zhōng yǒu wàng, wǎn lái fú lù zì ānrán.",
+                translation: "Hari biasa ukuran rejeki tidak mencukupi, harta peninggalanpun tidak seberapa. Berusaha hanya hidup lumayan, tetapi begitu waktunya tiba makan dan pakai melebihi dari sebelumnya."
+            },
+            "3.6": {
+                hanzi: "不须劳碌过平生，独自成家福不轻。\n早有福星高照命，教君凡事遂心成。",
+                pinyin: "Bù xū láolù guò píngshēng, dúzì chéngjiā fú bù qīng.\nZǎo yǒu fúxīng gāo zhào mìng, jiào jūn fán shì suì xīn chéng.",
+                translation: "Tak usah bercapai lelah untuk melewati hidup, karena memiliki buah keberuntungan tidak sedikit. Siang-siang telah ada bintang rejeki yang menyinari, ditanggung kau punya pergi segala usaha berhasil."
+            },
+            "3.7": {
+                hanzi: "此命般般事不成，弟兄少力自孤行。\n虽然祖业须有破，来得明时去得暗。",
+                pinyin: "Cǐ mìng bānbān shì bù chéng, dìxiōng shǎo lì zì gū xíng.\nSuīrán zǔ yè xū yǒu pò, lái dé míng shí qù dé àn.",
+                translation: "Nasib ini segala apa susah terjadi. Bantuan adik & kakak sedikit sekali. Harus bekerja sendiri. Meski ada warisan dari orangtua datangnya terlihat perginya tidak ketahuan."
+            },
+            "3.8": {
+                hanzi: "一身骨肉最清高，早入簧门姓氏标。\n待到年将三十六，蓝衫脱去换红袍。",
+                pinyin: "Yī shēn gǔ ròu zuì qīng gāo, zǎo rù huáng mén xìng shì biāo.\nDài dào nián jiāng sān shí liù, lán shān tuō qù huàn hóng páo.",
+                translation: "Dalam hidupnya selalu mulia, siang siang masuk sekolah namamu tentu harum. Tunggu sampai umur tiga puluh enam, baju biru berganti baju merah (menjadi pejabat)."
+            },
+            "3.9": {
+                hanzi: "此命终身运不通，劳劳作事尽皆空。\n苦心竭力成何济，恰似浮云遮日头。",
+                pinyin: "Cǐ mìng zhōngshēn yùn bù tōng, láoláo zuò shì jìn jiē kōng.\nKǔxīn jiélì chéng hé jì, qiàsì fúyún zhē rì tóu.",
+                translation: "Peruntunganmu sampai tua tidak baik, meski capai kerja habiskan tenaga hasilnya kosong. Capai hati capai tenaga berusaha, akhirnya dapatnya seperti dalam impian."
+            },
+            "4.0": {
+                hanzi: "平生衣禄是绵长，件件心中自主张。\n前面风霜多受过，后来必定享安康。",
+                pinyin: "Píngshēng yī lù shì mián cháng, jiànjiàn xīnzhōng zì zhǔzhāng.\nQiánmiàn fēngshuāng duō shòu guò, hòulái bìdìng xiǎng ānkāng.",
+                translation: "Walau hidupmu makan pakai sederhana, segala hal ada dalam hati dan tujuan yang tetap. Kesulitan yang lampau telah dilewati, tetapi akhirnya tentu dapat dirasakan kesenangannya."
+            },
+            "4.1": {
+                hanzi: "此命推来事不同，为人能得自安隆。\n中年衣食丰盈足，末限逍遥似老翁。",
+                pinyin: "Cǐ mìng tuī lái shì bù tóng, wéirén néng dé zì ān lóng.\nZhōngnián yī shí fēngyíng zú, mò xiàn xiāoyáo sì lǎowēng.",
+                translation: "Hidupmu selalu tidak sama, anda harus bisa hidup melihat keadaan. Umur setengah tua dapat hidup seperti orang hartawan, pada awalannya tidak dapat dikatakan."
+            },
+            "4.2": {
+                hanzi: "得宽怀处且宽怀，何用双眉皱不开。\n若使中年命运济，那时名利一齐来。",
+                pinyin: "Dé kuān huái chù qiě kuān huái, hé yòng shuāng méi zhòu bù kāi.\nRuò shǐ zhōngnián mìngyùn jì, nà shí mínglì yīqí lái.",
+                translation: "Dalam keadaan sulit ketemu kesulitan, buat apa terlalu disesalkan. Sampai pada umur pertengahan rejeki akan tiba. Nah, di waktu itulah segalanya akan terselesaikan."
+            },
+            "4.3": {
+                hanzi: "为人心性最聪明，作事轩昂近贵人。\n衣禄一生天注定，不须劳碌是丰亨。",
+                pinyin: "Wéirén xīnxìng zuì cōngmíng, zuò shì xuān'áng jìn guìrén.\nYī lù yīshēng tiān zhùdìng, bù xū láolù shì fēng hēng.",
+                translation: "Jadi orangnya hatinya mulia dan pintar, segala perkerjaan tentu dapat bantuan Kwi Jin. Pakaian bagus telah disediakan oleh Thian, tak usah capai capai hidupnya senang."
+            },
+            "4.4": {
+                hanzi: "万事由天莫强求，何须苦苦用机谋。\n少年轻奋老来福，衣食丰盈度春秋。",
+                pinyin: "Wàn shì yóu tiān mò qiáng qiú, hé xū kǔkǔ yòng jī móu.\nShàonián qīng fèn lǎo lái fú, yī shí fēngyíng dù chūnqiū.",
+                translation: "Segala urusan dari Thian tak usah diminta minta, harus tahu rejekimu mengandalkan dari orang lain. Waktu muda keuangan susah seperti yang diinginkan. Pada umur lanjut sudah pasti hidup senang."
+            },
+            "4.5": {
+                hanzi: "初年运限未曾亨，纵有功名在后成。\n须待四旬方自立，移居改姓始安宁。",
+                pinyin: "Chū nián yùn xiàn wèi céng hēng, zòng yǒu gōngmíng zài hòu chéng.\nXū dài sì xún fāng zìlì, yí jū gǎi xìng shǐ ānníng.",
+                translation: "Keberuntungan anda akhirnya bagaimana, mula mula susah akhirnya membaik. Dalam hidup sukar memelihara anak lelaki maupun perempuan. Dari sanak saudara juga tak banyak bantuan."
+            },
+            "4.6": {
+                hanzi: "东西南北尽皆通，出姓移名更觉隆。\n衣禄无亏天数定，中年晚景一般同。",
+                pinyin: "Dōng xī nán běi jìn jiē tōng, chū xìng yí míng gèng jué lóng.\nYī lù wú kuī tiānshù dìng, zhōngnián wǎn jǐng yībān tóng.",
+                translation: "Timur, Barat, Selatan, Utara semua dijelajahi. Ganti nama marga dan pindah tempat kan merasa lebih baik. Makan pakai serba tidak kurang, sudah ditentukan oleh Thian. Pada umur setengah tua hingga tua sama saja."
+            },
+            "4.7": {
+                hanzi: "此命推来旺末年，妻荣子贵自怡然。\n平生原有滔滔福，财源如水满百川。",
+                pinyin: "Cǐ mìng tuī lái wàng mò nián, qī róng zǐ guì zì yírán.\nPíngshēng yuán yǒu tāotāo fú, cáiyuán rú shuǐ mǎn bǎichuān.",
+                translation: "Nasib orang ini sudah tua baru senang, istri dan anak mulia memang sudah ditentukan. Sepanjang hidup memang ada murah rejeki. Sumber keuntungan ada seperti mata air."
+            },
+            "4.8": {
+                hanzi: "初年运蹇事难谋，渐有财源如水流。\n到得中年衣食旺，那时名利一齐收。",
+                pinyin: "Chū nián yùn jiǎn shì nán móu, jiàn yǒu cáiyuán rú shuǐ liú.\nDào dé zhōngnián yī shí wàng, nà shí mínglì yīqí shōu.",
+                translation: "Waktu muda peruntungan belum bisa didapat, tidak usah banyak pusing sama saja susah. Bersaudara 6 orang tidak ada yang dapat diminta bantuan, hidup sendiri kerja keras di hari tua barulah mendingan."
+            },
+            "4.9": {
+                hanzi: "此命推来福不轻，自成自立显门庭。\n从来富贵人亲近，使婢差奴过一生。",
+                pinyin: "Cǐ mìng tuī lái fú bù qīng, zì chéng zìlì xiǎn méntíng.\nCónglái fùguì rén qīnjìn, shǐ bì chà nú guò yīshēng.",
+                translation: "Orang ini rejekinya tidak ringan, kerja sendiri, berdiri sendiri kemakmuran diambang pintu. Selain kaya mulia, semua orang menghormatinya. Dari pegawai rendah hingga tingkat karyawan tingkat tinggi semuanya selamanya tersedia."
+            },
+            "5.0": {
+                hanzi: "为名为利终日劳，中年福禄也多遭。\n老来是有财星照，不比前番目下高。",
+                pinyin: "Wéi míng wéi lì zhōngrì láo, zhōngnián fú lù yě duō zāo.\nLǎo lái shì yǒu cáixīng zhào, bù bǐ qián fān mù xià gāo.",
+                translation: "Untuk hasil dan nama dilakukan dengan tekun, umur pertengahan rejeki banyak datang. Umur tua bintang kekayaan menyinari, tak usah dibandingkan dengan yang lampau karena sudah di depan mata."
+            },
+            "5.1": {
+                hanzi: "一世荣华事事通，不须劳碌自亨通。\n弟兄叔侄皆如意，家业成时福禄宏。",
+                pinyin: "Yī shì rónghuá shìshì tōng, bù xū láolù zì hēngtōng.\nDìxiōng shū zhí jiē rúyì, jiā yè chéng shí fú lù hóng.",
+                translation: "Seumur hidup serba mewah, urusanpun mudah. Tak usah capai capai rejeki dengan sendirinya datang. Kakak beradik, paman, keponakan semua akur. Rumah tangga, harta benda rejeki semua seperti yang diinginkan."
+            },
+            "5.2": {
+                hanzi: "一世荣华事事能，不须劳碌自然宁。\n六亲兄弟皆如意，家业丰盈福禄宏。",
+                pinyin: "Yī shì rónghuá shìshì néng, bù xū láolù zìrán níng.\nLiùqīn xiōngdì jiē rúyì, jiā yè fēngyíng fú lù hóng.",
+                translation: "Sepanjang hidup segala urusan dapat dilaksanakan, tak usah cape repot dan lelah dengan sendirinya berhasil. Dalam pergaulan dapat sambutan yang hangat, harta benda makmur memuaskan hati."
+            },
+            "5.3": {
+                hanzi: "此格推来礼义通，一身福禄用无穷。\n财源茂盛家兴旺，夫妇和谐乐融融。",
+                pinyin: "Cǐ gé tuī lái lǐyì tōng, yī shēn fú lù yòng wúqióng.\nCáiyuán màoshèng jiā xīngwàng, fūfù héxié lè róngróng.",
+                translation: "Ini orang rejekinya bagus, membangun rumah tangga dan harta ada di antaranya. Seumur hidup makan pakai sudah pasti. Jodoh seorang yang termasuk di kalangan orang yang kaya."
+            },
+            "5.4": {
+                hanzi: "此格推来礼义通，一身福禄用无穷。\n酸甜苦咸皆尝遍，财源滚滚自丰隆。",
+                pinyin: "Cǐ gé tuī lái lǐyì tōng, yī shēn fú lù yòng wúqióng.\nSuān tián kǔ xián jiē cháng biàn, cáiyuán gǔngǔn zì fēnglóng.",
+                translation: "Ini orang rejekinya makmur, kepintaran cukup & pekerjaan memuaskan. Pakai cukup makan cukup, kesenangan memuaskan. Betul-betul ialah seorang yang disebut seorang hartawan."
+            },
+            "5.5": {
+                hanzi: "策马扬鞭显姓名，少年一第显门庭。\n财源茂盛如春水，富贵荣华耀祖茔。",
+                pinyin: "Cè mǎ yáng biān xiǎn xìngmíng, shàonián yī dì xiǎn méntíng.\nCáiyuán màoshèng rú chūnshuǐ, fùguì rónghuá yào zǔ yíng.",
+                translation: "Melarikan kuda dengan pecut untuk mendapatkan nama baik, masih muda kerja baik dapat pujian orang. Pada satu soal rejeki datang sebagai sumber air, kekayaan kemuliaan mengharumkan seluruh sanak keluarga."
+            },
+            "5.6": {
+                hanzi: "此格推来礼义通，一身福禄用无穷。\n酸甜苦咸皆尝遍，财源滚滚自丰隆。",
+                pinyin: "Cǐ gé tuī lái lǐyì tōng, yī shēn fú lù yòng wúqióng.\nSuān tián kǔ xián jiē cháng biàn, cáiyuán gǔngǔn zì fēnglóng.",
+                translation: "Orang ini menjalankan susila dengan benar, seumur hidup sejekinya tak habis-habis. Manis, asam, pahit, pedas semua telah dicicipi, penghasilan dan kesenangan mengalir lalu tersimpan dengan aman."
+            },
+            "5.7": {
+                hanzi: "福禄丰盈万事全，一身福禄自安然。\n声名远播人称颂，逍遥快活似神仙。",
+                pinyin: "Fú lù fēngyíng wàn shì quán, yī shēn fú lù zì ānrán.\nShēngmíng yuǎn bō rén chēngsòng, xiāoyáo kuàihuó sì shénxiān.",
+                translation: "Rejekinya makmur segala hal dapat tercukupi, seumur hidup gembira mendapat anugerah Thian. Nama terkenal membuat orang ingin hidup seperti kemana ia mau pergi seperti Dewa."
+            },
+            "5.8": {
+                hanzi: "平生衣食自然来，名利双全福禄偕。\n富贵荣华皆具备，腰金衣紫步金阶。",
+                pinyin: "Píngshēng yī shí zìrán lái, mínglì shuāng quán fú lù xié.\nFùguì rónghuá jiē jùbèi, yāo jīn yī zǐ bù jīn jiē.",
+                translation: "Seumur hidup makan pakai memang datang, nama & hasil keduanya lengkap, kaya & senang keduanya mengikuti. Seperti memakai pakaian bagus, ikat pinggang dari batu giok, jalanpun di lantai emas."
+            },
+            "5.9": {
+                hanzi: "细推此格妙且清，必定才高学业成。\n甲第之中应有分，扬鞭走马显门庭。",
+                pinyin: "Xì tuī cǐ gé miào qiě qīng, bìdìng cái gāo xuéyè chéng.\nJiǎ dì zhī zhōng yīng yǒu fēn, yáng biān zǒu mǎ xiǎn méntíng.",
+                translation: "Orang ini pintar dan berbudi, maka dapat sekolah tinggi hingga lulus. Tentu berada diantara orang orang bertitel, dengan pecut melarikan kuda mendapatkan nama harum."
+            },
+            "6.0": {
+                hanzi: "一朝金榜快题名，荣宗耀祖显门庭。\n衣禄丰盈天注定，田园家业富千金。",
+                pinyin: "Yī zhāo jīnbǎng kuài tímíng, róng zōng yào zǔ xiǎn méntíng.\nYī lù fēngyíng tiān zhùdìng, tiányuán jiā yè fù qiānjīn.",
+                translation: "Lulus ujian disekolah mendapat nama baik, dapat meneruskan kemuliaan leluhur. Pakaian yang telah ditentukan tidak kurang sedikitpun. Sawah, kebun, uang, kain sutera, pokoknya semuanya makmur."
+            },
+            "6.1": {
+                hanzi: "不做朝臣做富翁，满腹文章四海通。\n声名远播人钦敬，富贵荣华显门庭。",
+                pinyin: "Bù zuò cháo chén zuò fùwēng, mǎn fù wénzhāng sìhǎi tōng.\nShēngmíng yuǎn bō rén qīnjìng, fùguì rónghuá xiǎn méntíng.",
+                translation: "Tidak dapat berpangkat atau berpengaruh tetapi ditetapkan didunia sebagai orang kaya besar. Dengan kepintarannya semua kitab-kitab dapat dikuasai, dengan itu namanya harum dan agung karenanya."
+            },
+            "6.2": {
+                hanzi: "此命推来福不轻，高官厚禄自天成。\n腰金衣紫声名远，富贵荣华冠群英。",
+                pinyin: "Cǐ mìng tuī lái fú bù qīng, gāoguān hòu lù zì tiān chéng.\nYāo jīn yī zǐ shēngmíng yuǎn, fùguì rónghuá guàn qúnyīng.",
+                translation: "Nasib ini rejeki tidak sedikit, sekolah tentu dapat gelar tinggi. Pakaian bagus, ikat pinggang emas dan berpangkat maka kaya dan mulia tidak ada yang menyamai."
+            },
+            "6.3": {
+                hanzi: "此命格局最高强，富贵荣华显门庭。\n声名远播人钦敬，位高权重震乾坤。",
+                pinyin: "Cǐ mìng géjú zuì gāoqiáng, fùguì rónghuá xiǎn méntíng.\nShēngmíng yuǎn bō rén qīnjìng, wèi gāo quán zhòng zhèn qiánkūn.",
+                translation: "Nasib ini kedudukan tinggi dan banyak rejeki, memiliki kekayaan, kemuliaan yang luar biasa. Nama terkenal, rumah bagus dan keharuman namanya tercium didunia."
+            },
+            "6.4": {
+                hanzi: "此命威权不可当，紫袍金带坐朝堂。\n富贵荣华无人比，名扬天下万年长。",
+                pinyin: "Cǐ mìng wēiquán bù kě dāng, zǐ páo jīn dài zuò cháotáng.\nFùguì rónghuá wú rén bǐ, míng yáng tiānxià wànnián cháng.",
+                translation: "Orang ini kekuasaannya tinggi tidak tertandingi, pakaian berpangkat duduk ditingkat yang tinggi. Kekayaan dan kemuliaannya tidak ada yang menyamainya, ternama dari dahulu hingga sekarang."
+            },
+            "6.5": {
+                hanzi: "此命富贵不寻常，安邦定国姓名扬。\n文武双全无人比，功盖天下美名传。",
+                pinyin: "Cǐ mìng fùguì bù xúncháng, ān bāng dìng guó xìngmíng yáng.\nWén wǔ shuāng quán wú rén bǐ, gōng gài tiānxià měimíng chuán.",
+                translation: "Orang ini memiliki kekayaan, kemuliaan tidak kecil dan tidak ada yang dapat mengimbanginya. Dapat menentramkan negara, menyelamatkan kota, dan mengatur masyarakat maka nama harumnya terdengar kesuluruh pelosok."
+            },
+            "6.6": {
+                hanzi: "此命富贵自天成，堆金积玉满堂红。\n天赐福禄无人比，名扬四海耀门庭。",
+                pinyin: "Cǐ mìng fùguì zì tiān chéng, duī jīn jī yù mǎn táng hóng.\nTiān cì fú lù wú rén bǐ, míng yáng sìhǎi yào méntíng.",
+                translation: "Orang ini berada di antara para hartawan, tumpukan emas dan permata memenuhi ruangan. Memiliki kekayaan yang dianugerahkan Thian, kedudukan dan nama harum termasyur mengharumkan sanak keluarga."
+            },
+            "6.7": {
+                hanzi: "此命生来福不轻，田园家业自天成。\n一生衣食丰盈足，富贵荣华享太平。",
+                pinyin: "Cǐ mìng shēng lái fú bù qīng, tiányuán jiā yè zì tiān chéng.\nYīshēng yī shí fēngyíng zú, fùguì rónghuá xiǎng tàipíng.",
+                translation: "Sejak lahir rejekinya telah tersedia, kebun, sawah, harta benda juga banyak. Selama hidupnya tidak pernah kurang berpakaian mewah, perjalanan hidupnya maju dikarenakan segala usaha mudah terlaksana."
+            },
+            "6.8": {
+                hanzi: "富贵荣华自天成，不须劳碌享安康。\n十年之后难相比，祖业家财似水长。",
+                pinyin: "Fùguì rónghuá zì tiān chéng, bù xū láolù xiǎng ānkāng.\nShí nián zhīhòu nán xiāngbǐ, zǔ yè jiā cái sì shuǐ cháng.",
+                translation: "Kekayaan, kemuliaan tidak usah diminta karena sudah disediakan Thian, berlaksa emas, harta benda tidak usah diusahakan lagi. 10 tahun kemudian sudah tak dapat dibandingkan lagi, harta leluhur diumpamakan perahu diatas air."
+            },
+            "6.9": {
+                hanzi: "此命推来福不轻，紫袍金带显门庭。\n一生富贵天注定，万人钦敬享太平。",
+                pinyin: "Cǐ mìng tuī lái fú bù qīng, zǐ páo jīn dài xiǎn méntíng.\nYīshēng fùguì tiān zhùdìng, wàn rén qīnjìng xiǎng tàipíng.",
+                translation: "Orang ini tergolong dari bintang baju hijau, seumur hidupnya mewah karena kekayaannya sudah ditakdirkan Thian. Banyak orang iri hati melihatnya, melewati hidupnya cukup senang dan memuaskan."
+            },
+            "7.0": {
+                hanzi: "此命推来福不轻，何须愁虑苦劳心。\n荣华富贵天注定，锦衣玉食住高楼。",
+                pinyin: "Cǐ mìng tuī lái fú bù qīng, hé xū chóulǜ kǔ láo xīn.\nRónghuá fùguì tiān zhùdìng, jǐn yī yù shí zhù gāolóu.",
+                translation: "Orang ini rejekinya tidak ringan mengapa harus bersedih dan capai hati. Kekayaan, kemulian telah disediakan Thian, berpakaian yang bagus dan bertempat tinggal di gedung yang indah."
+            },
+            "7.1": {
+                hanzi: "此命推来大不同，结交皆在贵人中。\n一生富贵荣华显，福禄双全寿如松。",
+                pinyin: "Cǐ mìng tuī lái dà bù tóng, jiéjiāo jiē zài guìrén zhōng.\nYīshēng fùguì rónghuá xiǎn, fú lù shuāng quán shòu rú sōng.",
+                translation: "Orang ini besarnya tidak sama seperti orang lain, bergaul di antara orang berpangkat sepanjang hidupnya sebagai seorang hartawan. Mewah, mulia, agung memang dasar bakatnya."
+            },
+            "7.2": {
+                hanzi: "此命格中最高强，安邦定国姓名扬。\n文武双全无人比，功盖天下美名传。",
+                pinyin: "Cǐ mìng gé zhōng zuì gāoqiáng, ān bāng dìng guó xìngmíng yáng.\nWén wǔ shuāng quán wú rén bǐ, gōng gài tiānxià měimíng chuán.",
+                translation: "Ini adalah ramalan tertinggi. Orang ini memiliki kemampuan untuk menenangkan negara dan memimpin bangsa. Nama harumnya akan dikenal luas, dengan kemampuan sastra dan bela diri yang tak tertandingi."
+            }
+        };
+
+        // ============================================
+        // ✅ FUNGSI UTAMA
+        // ============================================
+
+        function qianToLiang(qian) {
+            return (qian / 10).toFixed(1);
+        }
+
+        function getShichenFromHour(hour24) {
+            for (let sc of shichenMap) {
+                if (sc.start < sc.end) {
+                    if (hour24 >= sc.start && hour24 < sc.end) return sc;
+                } else {
+                    if (hour24 >= sc.start || hour24 < sc.end) return sc;
+                }
+            }
+            return null;
+        }
+
+        // ============================================
+        // ✅ LIBRARY STATUS CHECK
+        // ============================================
+        
+        function checkLibraryStatus() {
+            const statusEl = document.getElementById('libraryStatus');
+            
+            if (typeof Lunar !== 'undefined' && typeof Solar !== 'undefined') {
+                statusEl.className = 'library-status loaded';
+                statusEl.innerHTML = '✅ Library kalender lunar berhasil dimuat! Konversi akurat 100%.';
+                return true;
+            } else {
+                statusEl.className = 'library-status error';
+                statusEl.innerHTML = '❌ Library gagal dimuat. Silakan refresh halaman atau cek koneksi internet.';
+                return false;
+            }
+        }
+
+        // ============================================
+        // ✅ KONVERSI MASEHI KE LUNAR
+        // ============================================
+        
+        function convertToLunar() {
+            const dateInput = document.getElementById('gregorianDate').value;
+            const hourInput = document.getElementById('gregorianHour').value;
+            
+            if (!dateInput || !hourInput) {
+                alert('Mohon isi tanggal dan jam lahir!');
+                return;
+            }
+
+            if (!checkLibraryStatus()) {
+                alert('Library kalender lunar belum termuat. Silakan refresh halaman.');
+                return;
+            }
+
+            const date = new Date(dateInput);
+            const hour = parseInt(hourInput);
+
+            try {
+                const solar = Solar.fromDate(date);
+                const lunar = solar.getLunar();
+                const shichen = getShichenFromHour(hour);
+                
+                const yearGanZhi = lunar.getYearInGanZhi();
+                const yearShengXiao = lunar.getYearShengXiao();
+                
+                const lunarData = {
+                    year: lunar.getYear(),
+                    month: lunar.getMonth(),
+                    day: lunar.getDay(),
+                    hour: shichen ? `${shichen.name} (${shichen.zodiac}) - ${shichen.time}` : 'Unknown',
+                    hourShichenNum: shichen ? shichen.shichen : null
+                };
+                
+                document.getElementById('lunarYear').textContent = `${lunarData.year} (${yearGanZhi} - Tahun ${yearShengXiao})`;
+                document.getElementById('lunarMonth').textContent = lunarData.month;
+                document.getElementById('lunarDay').textContent = lunarData.day;
+                document.getElementById('lunarHour').textContent = lunarData.hour;
+                
+                document.getElementById('lunarResult').classList.add('show');
+                
+                window.lunarData = lunarData;
+                
+            } catch (error) {
+                alert('Error konversi: ' + error.message);
+                console.error(error);
+            }
+        }
+
+        function autoFillForm() {
+            if (!window.lunarData) return;
+            
+            document.getElementById('birthYear').value = window.lunarData.year;
+            document.getElementById('birthMonth').value = window.lunarData.month;
+            document.getElementById('birthDay').value = window.lunarData.day;
+            
+            if (window.lunarData.hourShichenNum) {
+                const shichen = shichenMap.find(s => s.shichen === window.lunarData.hourShichenNum);
+                if (shichen) {
+                    document.getElementById('birthHour').value = shichen.start;
+                    document.getElementById('birthHour').dispatchEvent(new Event('input'));
+                }
+            }
+            
+            alert('✅ Data lunar telah diisi otomatis! Klik "Hitung Ramalan Tulang"');
+        }
+
+        // ============================================
+        // ✅ INIT & EVENT HANDLERS
+        // ============================================
+
+        // Populate tahun
+        const yearSelect = document.getElementById('birthYear');
+        for (let year = 1924; year <= 2043; year++) {
+            const option = document.createElement('option');
+            option.value = year;
+            option.textContent = year;
+            yearSelect.appendChild(option);
+        }
+
+        // Populate hari
+        const daySelect = document.getElementById('birthDay');
+        for (let day = 1; day <= 30; day++) {
+            const option = document.createElement('option');
+            option.value = day;
+            option.textContent = `Hari ${day}`;
+            daySelect.appendChild(option);
+        }
+
+        // Auto-detect shichen
+        document.getElementById('birthHour').addEventListener('input', function() {
+            const hour = parseInt(this.value);
+            const display = document.getElementById('shichenDisplay');
+            
+            if (!isNaN(hour) && hour >= 0 && hour <= 23) {
+                const shichen = getShichenFromHour(hour);
+                if (shichen) {
+                    document.getElementById('shichenName').textContent = `${shichen.name} (${shichen.zodiac})`;
+                    document.getElementById('shichenTime').textContent = shichen.time;
+                    display.classList.add('show');
+                }
+            } else {
+                display.classList.remove('show');
+            }
+        });
+
+        function showTimeTable() {
+            const timeInfo = document.getElementById('timeInfo');
+            const tbody = document.getElementById('timeTableBody');
+            
+            if (timeInfo.classList.contains('show')) {
+                timeInfo.classList.remove('show');
+                return;
+            }
+
+            tbody.innerHTML = '';
+            shichenMap.forEach(sc => {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td>${sc.time}</td><td>${sc.name}</td><td>${sc.zodiac}</td>`;
+                tbody.appendChild(row);
+            });
+
+            timeInfo.classList.add('show');
+        }
+
+        // Handle form submission
+        document.getElementById('fortuneForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const year = parseInt(document.getElementById('birthYear').value);
+            const month = parseInt(document.getElementById('birthMonth').value);
+            const day = parseInt(document.getElementById('birthDay').value);
+            const hour24 = parseInt(document.getElementById('birthHour').value);
+
+            const shichen = getShichenFromHour(hour24);
+            if (!shichen) {
+                alert('Jam tidak valid!');
+                return;
+            }
+
+            const yWeight = yearWeightsQian[year] || 0;
+            const mWeight = monthWeightsQian[month] || 0;
+            const dWeight = dayWeightsQian[day] || 0;
+            const hWeight = hourWeightsQian[shichen.shichen] || 0;
+
+            const totalQian = yWeight + mWeight + dWeight + hWeight;
+            const totalLiang = (totalQian / 10).toFixed(1);
+
+            document.getElementById('yearWeight').textContent = `${yWeight} qian (${qianToLiang(yWeight)} Liang)`;
+            document.getElementById('monthWeight').textContent = `${mWeight} qian (${qianToLiang(mWeight)} Liang)`;
+            document.getElementById('dayWeight').textContent = `${dWeight} qian (${qianToLiang(dWeight)} Liang)`;
+            document.getElementById('hourWeight').textContent = `${hWeight} qian (${qianToLiang(hWeight)} Liang)`;
+            document.getElementById('totalWeight').textContent = `${totalQian} qian = ${totalLiang} Liang`;
+            document.getElementById('boneWeightValue').textContent = `${totalLiang} Liang`;
+            document.getElementById('boneWeightText').textContent = `Total: ${totalQian} qian`;
+            document.getElementById('hourShichenName').textContent = `${shichen.name} - ${shichen.zodiac}`;
+
+            const fortuneData = fortuneReadings[totalLiang];
+            if (fortuneData) {
+                document.getElementById('hanziText').innerHTML = fortuneData.hanzi.replace(/\n/g, '<br>');
+                document.getElementById('pinyinText').innerHTML = fortuneData.pinyin.replace(/\n/g, '<br>');
+                document.getElementById('fortuneDescription').textContent = fortuneData.translation;
+                document.getElementById('originalTextSection').style.display = 'block';
+            } else {
+                document.getElementById('fortuneDescription').textContent = "Maaf, ramalan untuk berat tulang ini belum tersedia.";
+                document.getElementById('originalTextSection').style.display = 'none';
+            }
+
+            document.getElementById('resultSection').style.display = 'block';
+            document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Modal functions
+        function closeModal() {
+            document.getElementById('supportModal').classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        document.getElementById('supportModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Check library on load
+        window.addEventListener('load', function() {
+            setTimeout(checkLibraryStatus, 500);
+        });
+
+        // Show modal after 60 seconds
+        setTimeout(function() {
+            if (!sessionStorage.getItem('supportModalShown')) {
+                document.getElementById('supportModal').classList.add('show');
+                sessionStorage.setItem('supportModalShown', 'true');
+            }
+        }, 60000);
+    </script>
+</body>
+</html>
