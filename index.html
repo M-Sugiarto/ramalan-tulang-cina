@@ -496,6 +496,179 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         }
 
+        /* ===== ADVICE SECTION ===== */
+        .advice-section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-left: 5px solid #667eea;
+        }
+
+        .advice-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .advice-icon {
+            font-size: 2.5em;
+        }
+
+        .advice-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .advice-category {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            color: white;
+            font-size: 0.9em;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        .advice-summary {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+            color: #555;
+            font-style: italic;
+        }
+
+        .ancient-wisdom {
+            background: linear-gradient(135deg, #fff9e6 0%, #ffeaa7 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #fdcb6e;
+        }
+
+        .ancient-wisdom h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .wisdom-quote {
+            font-size: 1.4em;
+            color: #333;
+            margin-bottom: 8px;
+            font-family: 'SimSun', 'STSong', serif;
+            line-height: 1.6;
+        }
+
+        .wisdom-pinyin {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        .wisdom-translation {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .recommendations-list {
+            margin-bottom: 20px;
+        }
+
+        .recommendations-list h4 {
+            color: #2d3436;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .recommendation-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            border-left: 3px solid #667eea;
+        }
+
+        .recommendation-item h5 {
+            color: #667eea;
+            margin-bottom: 8px;
+            font-size: 1.05em;
+        }
+
+        .recommendation-item p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .recommendation-item .action {
+            background: #e8f5e9;
+            padding: 10px;
+            border-radius: 6px;
+            color: #2e7d32;
+            font-weight: 500;
+            border-left: 3px solid #4caf50;
+        }
+
+        .things-to-avoid {
+            background: #ffebee;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #e53935;
+        }
+
+        .things-to-avoid h4 {
+            color: #c62828;
+            margin-bottom: 10px;
+        }
+
+        .things-to-avoid ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .things-to-avoid li {
+            padding: 5px 0;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .timeline-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #2196f3;
+            color: #0d47a1;
+            line-height: 1.6;
+        }
+
+        .timeline-box strong {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1.1em;
+        }
+
+        @media (max-width: 600px) {
+            .advice-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .advice-icon {
+                font-size: 2em;
+            }
+            .wisdom-quote {
+                font-size: 1.1em;
+            }
+        }
+
         /* ===== FOOTER DISCLAIMER ===== */
         .footer-disclaimer {
             background: rgba(255,255,255,0.95);
@@ -552,7 +725,7 @@
     <!-- ===== RUNNING TEXT DISCLAIMER ===== -->
     <div class="running-text-wrapper">
         <div class="running-text-content">
-            <span>⚠️ DISCLAIMER:</span>
+            <span>️ DISCLAIMER:</span>
             <span>Tool ini 100% GRATIS & Open Source (MIT License)</span>
             <span class="separator">★</span>
             <span>Donasi bersifat SUKARELA & TIDAK WAJIB</span>
@@ -560,6 +733,8 @@
             <span>Ramalan hanya untuk HIBURAN, bukan keputusan hidup</span>
             <span class="separator">★</span>
             <span>Software disediakan "AS IS" tanpa garansi</span>
+            <span class="separator">★</span>
+            <span>📋 Ada panduan actionable untuk setiap ramalan</span>
             <span class="separator">★</span>
             <span>☕ Support: Trakteer & SociaBuzz</span>
             <span class="separator">★</span>
@@ -600,7 +775,7 @@
             </div>
 
             <div class="lunar-converter">
-                <h3>📅 Konversi Tanggal Masehi ke Lunar</h3>
+                <h3> Konversi Tanggal Masehi ke Lunar</h3>
                 <div class="grid-2">
                     <div class="form-group">
                         <label for="gregorianDate">Tanggal Lahir (Masehi)</label>
@@ -672,7 +847,7 @@
                 <button type="button" onclick="showTimeTable()" style="background: #28a745; margin-bottom: 20px;">📋 Lihat Tabel Shichen</button>
 
                 <div class="time-info" id="timeInfo">
-                    <h4>🕐 Tabel Konversi Jam ke Shichen (时辰)</h4>
+                    <h4> Tabel Konversi Jam ke Shichen (时辰)</h4>
                     <table class="time-table">
                         <thead>
                             <tr><th>Jam</th><th>Shichen</th><th>Zodiak</th></tr>
@@ -710,6 +885,41 @@
             <div class="fortune-text">
                 <h3>🔮 Terjemahan Bahasa Indonesia</h3>
                 <p id="fortuneDescription"></p>
+            </div>
+
+            <!-- ===== ADVICE SECTION ===== -->
+            <div class="advice-section" id="adviceSection" style="display:none;">
+                <div class="advice-header">
+                    <div class="advice-icon" id="adviceIcon"></div>
+                    <div>
+                        <div class="advice-title"> Panduan Mencapai Ramalan Baik</div>
+                        <div class="advice-category" id="adviceCategory">Kategori</div>
+                    </div>
+                </div>
+                
+                <div class="advice-summary" id="adviceSummary"></div>
+                
+                <div class="ancient-wisdom">
+                    <h4 id="wisdomTitle">📜 Kebijaksanaan Kuno</h4>
+                    <div class="wisdom-quote" id="wisdomQuote"></div>
+                    <div class="wisdom-pinyin" id="wisdomPinyin"></div>
+                    <div class="wisdom-translation" id="wisdomTranslation"></div>
+                </div>
+                
+                <div class="recommendations-list">
+                    <h4>✅ Yang Harus Dilakukan</h4>
+                    <div id="recommendationsContainer"></div>
+                </div>
+                
+                <div class="things-to-avoid">
+                    <h4>⚠️ Yang Harus Dihindari</h4>
+                    <ul id="avoidList"></ul>
+                </div>
+                
+                <div class="timeline-box">
+                    <strong>📅 Timeline Perkiraan</strong>
+                    <span id="timelineText"></span>
+                </div>
             </div>
 
             <div class="support-note">
@@ -855,7 +1065,7 @@
             },
             "2.5": {
                 hanzi: "此命推来祖业差，门庭冷落苦生涯。\n六亲兄弟难依靠，一世辛勤劳碌夸。",
-                pinyin: "Cǐ mìng tuī lái zǔ yè chà, méntíng lěngluò kǔ shēngyá.\nLiùqīn xiōngdì nán yīkào, yīshì xīnqín láolù kuā.",
+                pinyin: "C mìng tuī lái zǔ yè chà, méntíng lěngluò k shēngyá.\nLiùqīn xiōngdì nán yīkào, yīshì xīnqín láolù kuā.",
                 translation: "Nasib ini tidak dapat peninggalan harta warisan. Rumah tinggalnya seperti rumah kosong. Sanak saudara susah semua. Sepanjang hidupnya menanggung capai-lelah saja."
             },
             "2.6": {
@@ -895,12 +1105,12 @@
             },
             "3.3": {
                 hanzi: "初年运限未曾亨，纵有功名在后成。\n须待四旬方自立，移居改姓始安宁。",
-                pinyin: "Chū nián yùn xiàn wèi céng hēng, zòng yǒu gōngmíng zài hòu chéng.\nXū dài sì xún fāng zìlì, yí jū gǎi xìng shǐ ānníng.",
+                pinyin: "Chū nián yùn xiàn wèi céng hēng, zòng yǒu gōngmíng zài hòu chéng.\nXū dài sì xún fāng zìlì, yí jū gi xìng shǐ ānníng.",
                 translation: "Pada waktu muda kerjapun sukar berhasil, segala daya upaya digunakan dengan kesungguhan hati. Begitu lama masih seperti air mengalir pergi, kemudian peruntungan bisa dapatkan keberuntungan."
             },
             "3.4": {
                 hanzi: "此命福气果如何，移祖过房衣食多。\n末限运来方称意，平生劳碌苦中磨。",
-                pinyin: "Cǐ mìng fúqì guǒ rúhé, yí zǔ guò fáng yī shí duō.\nMò xiàn yùn lái fāng chèn yì, píngshēng láolù kǔ zhōng mó.",
+                pinyin: "C mìng fúqì guǒ rúhé, yí zǔ guò fáng yī shí duō.\nMò xiàn yùn lái fāng chèn yì, píngshēng láolù kǔ zhōng mó.",
                 translation: "Peruntungan ini rejekinya tidak dapat diterka bagaimana. Di rumah banyak tersedia pakaian orang suci. Berpisah dari orang tua/ keluar rumah baru dapat menjadi baik. Akhirnya tokh akan berdoa Omitofo."
             },
             "3.5": {
@@ -930,7 +1140,7 @@
             },
             "4.0": {
                 hanzi: "平生衣禄是绵长，件件心中自主张。\n前面风霜多受过，后来必定享安康。",
-                pinyin: "Píngshēng yī lù shì mián cháng, jiànjiàn xīnzhōng zì zhǔzhāng.\nQiánmiàn fēngshuāng duō shòu guò, hòulái bìdìng xiǎng ānkāng.",
+                pinyin: "Píngshēng yī lù shì mián cháng, jiànjiàn xīnzhōng zì zhǔzhāng.\nQiánmiàn fēngshuāng duō shòu guò, hòulái bìdìng xing ānkāng.",
                 translation: "Walau hidupmu makan pakai sederhana, segala hal ada dalam hati dan tujuan yang tetap. Kesulitan yang lampau telah dilewati, tetapi akhirnya tentu dapat dirasakan kesenangannya."
             },
             "4.1": {
@@ -970,7 +1180,7 @@
             },
             "4.8": {
                 hanzi: "初年运蹇事难谋，渐有财源如水流。\n到得中年衣食旺，那时名利一齐收。",
-                pinyin: "Chū nián yùn jiǎn shì nán móu, jiàn yǒu cáiyuán rú shuǐ liú.\nDào dé zhōngnián yī shí wàng, nà shí mínglì yīqí shōu.",
+                pinyin: "Chū nián yùn jiǎn shì nán móu, jiàn yu cáiyuán rú shuǐ liú.\nDào dé zhōngnián yī shí wàng, nà shí mínglì yīqí shōu.",
                 translation: "Waktu muda peruntungan belum bisa didapat, tidak usah banyak pusing sama saja susah. Bersaudara 6 orang tidak ada yang dapat diminta bantuan, hidup sendiri kerja keras di hari tua barulah mendingan."
             },
             "4.9": {
@@ -1004,7 +1214,7 @@
                 translation: "Ini orang rejekinya makmur, kepintaran cukup & pekerjaan memuaskan. Pakai cukup makan cukup, kesenangan memuaskan. Betul-betul ialah seorang yang disebut seorang hartawan."
             },
             "5.5": {
-                hanzi: "策马扬鞭显姓名，少年一第显门庭。\n财源茂盛如春水，富贵荣华耀祖茔。",
+                hanzi: "策马扬鞭显姓名，少年一第显门庭。\n财源茂盛如春水，富贵荣华耀祖。",
                 pinyin: "Cè mǎ yáng biān xiǎn xìngmíng, shàonián yī dì xiǎn méntíng.\nCáiyuán màoshèng rú chūnshuǐ, fùguì rónghuá yào zǔ yíng.",
                 translation: "Melarikan kuda dengan pecut untuk mendapatkan nama baik, masih muda kerja baik dapat pujian orang. Pada satu soal rejeki datang sebagai sumber air, kekayaan kemuliaan mengharumkan seluruh sanak keluarga."
             },
@@ -1020,7 +1230,7 @@
             },
             "5.8": {
                 hanzi: "平生衣食自然来，名利双全福禄偕。\n富贵荣华皆具备，腰金衣紫步金阶。",
-                pinyin: "Píngshēng yī shí zìrán lái, mínglì shuāng quán fú lù xié.\nFùguì rónghuá jiē jùbèi, yāo jīn yī zǐ bù jīn jiē.",
+                pinyin: "Píngshēng yī shí zìrán lái, mínglì shuāng quán fú lù xié.\nFùguì rónghuá jiē jùbèi, yāo jīn yī z bù jīn jiē.",
                 translation: "Seumur hidup makan pakai memang datang, nama & hasil keduanya lengkap, kaya & senang keduanya mengikuti. Seperti memakai pakaian bagus, ikat pinggang dari batu giok, jalanpun di lantai emas."
             },
             "5.9": {
@@ -1094,6 +1304,231 @@
                 translation: "Ini adalah ramalan tertinggi. Orang ini memiliki kemampuan untuk menenangkan negara dan memimpin bangsa. Nama harumnya akan dikenal luas, dengan kemampuan sastra dan bela diri yang tak tertandingi."
             }
         };
+
+        // ============================================
+        // ✅ DATA PANDUAN MENCAPAI RAMALAN BAIK
+        // ============================================
+
+        const fortuneAdvice = {
+            "low": {
+                category: "Perlu Usaha Ekstra",
+                color: "#e17055",
+                icon: "💪",
+                summary: "Ramalan ini menunjukkan awal yang menantang, tetapi BUKAN akhir dari segalanya. Catatan kuno Tiongkok mengajarkan bahwa nasib bisa diubah melalui usaha dan kebajikan.",
+                ancientWisdom: {
+                    title: "📜 Kebijaksanaan Kuno",
+                    quote: "勤能补拙，俭以养德",
+                    pinyin: "Qín néng bǔ zhuō, jiǎn yǐ yǎng dé",
+                    translation: "Kerja keras dapat menutupi kekurangan, hemat dapat memelihara kebajikan."
+                },
+                recommendations: [
+                    {
+                        title: "🏠 Pindah Tempat (移居 - Yí Jū)",
+                        description: "Beberapa ramalan (2.3, 2.4, 2.6) secara eksplisit menyarankan pindah tempat. Ini bukan sekadar mitos - lingkungan baru membawa energi baru, jaringan baru, dan peluang baru.",
+                        action: "Pertimbangkan merantau atau pindah ke kota/daerah yang lebih menjanjikan untuk karir."
+                    },
+                    {
+                        title: "✍️ Ganti Nama (改名 - Gǎi Míng)",
+                        description: "Ramalan 2.8 dan 2.9 menyebutkan ganti nama/marga. Dalam tradisi Tiongkok, nama membawa energi (气). Nama baru = awal baru.",
+                        action: "Konsultasi dengan ahli nama untuk memilih nama yang lebih harmonis dengan elemen lahir Anda."
+                    },
+                    {
+                        title: "📚 Belajar & Upgrade Skill (读书 - Dú Shū)",
+                        description: "Pendidikan adalah jalan paling pasti untuk mengubah nasib. Ramalan rendah sering menunjukkan kurang dukungan keluarga - jadi mandiri melalui ilmu.",
+                        action: "Investasi waktu 1-2 jam/hari untuk belajar skill baru yang diminati pasar."
+                    },
+                    {
+                        title: "🤝 Perbanyak Relasi (广结善缘 - Guǎng Jié Shàn Yuán)",
+                        description: "Karena sanak saudara tidak bisa diandalkan (disebut di banyak ramalan rendah), bangun 'keluarga pilihan' melalui jaringan pertemanan yang positif.",
+                        action: "Bergabung dengan komunitas positif, hindari toxic people, bangun networking."
+                    },
+                    {
+                        title: "💰 Hemat & Investasi (勤俭 - Qín Jiǎn)",
+                        description: "Ramalan 3.0 secara eksplisit menyebut '勤与俭' (rajin dan hemat). Mulai dari hal kecil.",
+                        action: "Sisihkan minimal 10-20% penghasilan untuk dana darurat dan investasi."
+                    },
+                    {
+                        title: "🙏 Accumulate Kebajikan (积德 - Jī Dé)",
+                        description: "Ini adalah ajaran paling fundamental. Catatan kuno: '积善之家必有余庆' - Keluarga yang berbuat baik pasti mendapat keberuntungan.",
+                        action: "Rutin berbuat baik: donasi, bantu orang lain, jadi relawan. Bukan untuk pamer, tapi tulus."
+                    }
+                ],
+                thingsToAvoid: [
+                    "❌ Jangan bergantung pada warisan atau bantuan keluarga",
+                    "❌ Jangan tinggal di tempat yang tidak berkembang",
+                    "❌ Jangan boros atau hidup di atas kemampuan",
+                    "❌ Jangan bergaul dengan orang negatif/pesimis",
+                    "❌ Jangan menyerah di usia muda - banyak ramalan rendah membaik di usia tua"
+                ],
+                timeline: "Ramalan rendah biasanya membaik setelah usia 36-40 tahun. Fokus pada fondasi di usia 20-35 tahun."
+            },
+            "medium": {
+                category: "Butuh Kesabaran",
+                color: "#fdcb6e",
+                icon: "⏳",
+                summary: "Ramalan ini menunjukkan perjalanan yang tidak instan. Kesuksesan datang di pertengahan hidup. Kesabaran dan konsistensi adalah kunci.",
+                ancientWisdom: {
+                    title: "📜 Kebijaksanaan Kuno",
+                    quote: "大器晚成，大音希声",
+                    pinyin: "Dà qì wǎn chéng, dà yīn xī shēng",
+                    translation: "Bejana besar butuh waktu lama untuk selesai, suara besar jarang terdengar."
+                },
+                recommendations: [
+                    {
+                        title: "🎯 Fokus Jangka Panjang",
+                        description: "Ramalan 3.2, 4.2, 4.8 semua menyebut '中年' (usia pertengahan) sebagai titik balik. Jangan tergiur skema cepat kaya.",
+                        action: "Buat rencana 5-10 tahun. Evaluasi progress setiap tahun, bukan setiap bulan."
+                    },
+                    {
+                        title: "🧘 Latih Kesabaran (忍耐 - Rěn Nài)",
+                        description: "Ramalan 4.2: '得宽怀处且宽怀' - Di tempat yang bisa lapang dada, bersikaplah lapang dada. Ini tentang mengelola ekspektasi.",
+                        action: "Praktik mindfulness/meditasi 10 menit/hari. Baca buku stoicism atau Tao Te Ching."
+                    },
+                    {
+                        title: "👨‍‍👧 Jaga Keluarga (齐家 - Qí Jiā)",
+                        description: "Ramalan kategori ini sering menyebut istri/anak/saudara. Harmoni keluarga = fondasi kesuksesan.",
+                        action: "Luangkan waktu berkualitas untuk keluarga setiap hari. Komunikasi terbuka."
+                    },
+                    {
+                        title: "📈 Konsistensi > Intensitas",
+                        description: "Ramalan 3.1: '何日云开见日头' - Kapan awan terbuka dan matahari terlihat. Awan PASTI terbuka jika Anda konsisten.",
+                        action: "Lakukan 1 hal kecil setiap hari yang mendukung goal jangka panjang Anda."
+                    },
+                    {
+                        title: "🌱 Investasi Diri (修身 - Xiū Shēn)",
+                        description: "Konfusianisme: '修身齐家治国平天下' - Perbaiki diri, atur keluarga, baru urus negara. Mulai dari dalam.",
+                        action: "Baca 1 buku per bulan, olahraga 3x/minggu, tidur cukup 7-8 jam."
+                    },
+                    {
+                        title: "🙏 Terus Berbuat Baik",
+                        description: "Kebajikan yang dikumpulkan di masa sulit akan berbuah di masa sukses. Ini hukum sebab-akibat (因果).",
+                        action: "Jangan berhenti berbuat baik meski hidup sulit. Itu justru investasi terbesar."
+                    }
+                ],
+                thingsToAvoid: [
+                    "❌ Jangan putus asa di usia muda - ini fase 'membangun fondasi'",
+                    "❌ Jangan iri dengan orang yang sukses lebih cepat - setiap orang punya timeline sendiri",
+                    "❌ Jangan ambil jalan pintas yang berisiko tinggi",
+                    "❌ Jangan abaikan kesehatan fisik dan mental",
+                    "❌ Jangan berhenti belajar karena merasa 'sudah cukup'"
+                ],
+                timeline: "Titik balik biasanya di usia 36-45 tahun. Usia 20-35 adalah fase 'menanam', 40+ adalah fase 'menuai'."
+            },
+            "good": {
+                category: "Perlu Dijaga",
+                color: "#00b894",
+                icon: "",
+                summary: "Ramalan ini menunjukkan keberuntungan yang baik. Tantangannya adalah MENJAGA dan TIDAK MEREMEHKAN. Kesombongan adalah musuh terbesar.",
+                ancientWisdom: {
+                    title: "📜 Kebijaksanaan Kuno",
+                    quote: "满招损，谦受益",
+                    pinyin: "Mǎn zhāo sǔn, qiān shòu yì",
+                    translation: "Kesombongan mengundang kerugian, kerendahan hati mendatangkan manfaat."
+                },
+                recommendations: [
+                    {
+                        title: "🙇 Rendah Hati (谦虚 - Qiān Xū)",
+                        description: "Ramalan 5.x sering menyebut '富贵' (kaya mulia). Bahaya terbesar: sombong. Tao Te Ching: 'Air yang rendah mengalir ke laut'.",
+                        action: "Tetap belajar dari siapa saja, termasuk yang 'di bawah' Anda. Hormati semua orang."
+                    },
+                    {
+                        title: "🤝 Berbagi Keberuntungan (分享 - Fēn Xiǎng)",
+                        description: "Keberuntungan yang tidak dibagikan akan habis. Konsep '散财' (menyebarkan kekayaan) dalam tradisi Tiongkok.",
+                        action: "Bantu orang lain sukses. Mentorship, donasi, bagi rezeki dengan keluarga."
+                    },
+                    {
+                        title: "⚖️ Jaga Keseimbangan (中庸 - Zhōng Yōng)",
+                        description: "Konfusianisme: '中庸之道' - Jalan tengah. Jangan ekstrem dalam apapun: kerja, makan, belanja, bahkan beribadah.",
+                        action: "Work-life balance. Jangan workaholic, jangan juga malas. Cari titik tengah."
+                    },
+                    {
+                        title: "📚 Terus Belajar (学无止境 - Xué Wú Zh Jìng)",
+                        description: "Ramalan 5.9 menyebut '才高学业成' (bakat tinggi, studi sukses). Tapi bakat tanpa maintenance akan tumpul.",
+                        action: "Upgrade skill setiap 2-3 tahun. Jangan nyaman di zona nyaman terlalu lama."
+                    },
+                    {
+                        title: "🏥 Jaga Kesehatan (养生 - Yǎng Shēn)",
+                        description: "Ramalan baik sering membuat orang lupa kesehatan. Padahal tanpa kesehatan, semua kekayaan tidak berarti.",
+                        action: "Medical check-up rutin 1x/tahun. Olahraga konsisten. Makan bergizi."
+                    },
+                    {
+                        title: "‍👩‍👧‍👦 Harmoni Keluarga (家和万事兴)",
+                        description: "'Keluarga harmonis, segala urusan berkembang'. Ramalan 5.1-5.3 menyebut keluarga yang baik - JAGA itu.",
+                        action: "Komunikasi dengan pasangan/anak. Quality time. Jangan kerja terus sampai lupa keluarga."
+                    }
+                ],
+                thingsToAvoid: [
+                    "❌ Jangan sombong atau meremehkan orang lain",
+                    "❌ Jangan boros atau pamer kekayaan (招忌 - mengundang iri)",
+                    "❌ Jangan berhenti bekerja keras karena merasa 'sudah sukses'",
+                    "❌ Jangan abaikan hubungan keluarga demi karir",
+                    "❌ Jangan ambil risiko berlebihan karena merasa 'dilindungi nasib baik'"
+                ],
+                timeline: "Puncak kesuksesan di usia 35-50 tahun. Fokus pada maintenance dan legacy di usia 50+."
+            },
+            "excellent": {
+                category: "Sangat Beruntung",
+                color: "#0984e3",
+                icon: "👑",
+                summary: "Ramalan ini sangat langka dan istimewa. Anda diberkati dengan keberuntungan luar biasa. TANGGUNG JAWAB Anda adalah menggunakan ini untuk kebaikan yang lebih besar.",
+                ancientWisdom: {
+                    title: "📜 Kebijaksanaan Kuno",
+                    quote: "厚德载物，自强不息",
+                    pinyin: "Hòu dé zài wù, zì qiáng bù xī",
+                    translation: "Kebajikan yang tebal menanggung segala, perkuat diri tanpa henti."
+                },
+                recommendations: [
+                    {
+                        title: "🌍 Kontribusi untuk Dunia (兼济天下 - Jiān Jì Tiān Xià)",
+                        description: "Konfusianisme: '穷则独善其身，达则兼济天下' - Saat miskin perbaiki diri, saat sukses bantu dunia. Anda di posisi '达' (sukses).",
+                        action: "Gunakan posisi Anda untuk impact yang lebih besar: social enterprise, philanthropy, mentorship massal."
+                    },
+                    {
+                        title: "🙇 Kerendahan Hati Ekstra (谦卑 - Qiān Bēi)",
+                        description: "Semakin tinggi posisi, semakin besar bahaya jatuh. Ramalan 6.4-7.2 menyebut kekuasaan tinggi - ini pedang bermata dua.",
+                        action: "Tetap rendah hati. Dengarkan kritik. Jangan dikelilingi 'yes men'."
+                    },
+                    {
+                        title: "📖 Wariskan Kebijaksanaan (传承 - Chuán Chéng)",
+                        description: "Ramalan 6.0: '荣宗耀祖' (memuliakan leluhur). Anda punya tanggung jawab untuk meneruskan nilai ke generasi berikutnya.",
+                        action: "Tulis memoir, ajari anak/cucu, buat foundation, atau dokumentasikan pengetahuan Anda."
+                    },
+                    {
+                        title: "⚖️ Keadilan & Integritas (正义 - Zhèng Yì)",
+                        description: "Ramalan 6.5: '安邦定国' (menenangkan negara). Kekuasaan tanpa integritas = kehancuran. Sejarah penuh contoh ini.",
+                        action: "Buat keputusan berdasarkan prinsip, bukan popularitas. Jaga integritas di atas segalanya."
+                    },
+                    {
+                        title: " Spiritualitas (修行 - Xiū Xíng)",
+                        description: "Semakin sukses secara material, semakin perlu keseimbangan spiritual. Banyak orang sukses akhirnya hampa tanpa ini.",
+                        action: "Luangkan waktu untuk refleksi, meditasi, ibadah, atau praktik spiritual yang Anda yakini."
+                    },
+                    {
+                        title: "🛡️ Lindungi dari Iri & Fitnah",
+                        description: "Ramalan 6.9: '万人钦敬' (dihormati ribuan orang) - tapi juga 'banyak yang iri'. Sukses besar menarik perhatian negatif.",
+                        action: "Jaga privasi, jangan pamer berlebihan, pilih lingkaran dalam dengan hati-hati."
+                    }
+                ],
+                thingsToAvoid: [
+                    "❌ Jangan arogan atau merasa 'special' - ini ujian terbesar",
+                    "❌ Jangan lupa asal-usul dan orang-orang yang membantu Anda",
+                    "❌ Jangan terjebak hedonisme atau kesenangan duniawi semata",
+                    " Jangan abaikan tanggung jawab sosial",
+                    " Jangan membuat musuh dengan cara yang tidak perlu",
+                    "❌ Jangan berhenti belajar - bahkan orang paling sukses pun bisa jatuh"
+                ],
+                timeline: "Puncak di usia 40-60 tahun. Fokus pada legacy dan kontribusi di usia 60+."
+            }
+        };
+
+        // Helper function untuk menentukan kategori
+        function getFortuneCategory(liang) {
+            const value = parseFloat(liang);
+            if (value < 3.0) return "low";
+            if (value < 4.5) return "medium";
+            if (value < 6.0) return "good";
+            return "excellent";
+        }
 
         // ============================================
         // ✅ FUNGSI UTAMA
@@ -1298,9 +1733,51 @@
                 document.getElementById('pinyinText').innerHTML = fortuneData.pinyin.replace(/\n/g, '<br>');
                 document.getElementById('fortuneDescription').textContent = fortuneData.translation;
                 document.getElementById('originalTextSection').style.display = 'block';
+                
+                // ✅ Tampilkan Advice Section
+                const category = getFortuneCategory(totalLiang);
+                const advice = fortuneAdvice[category];
+                
+                document.getElementById('adviceIcon').textContent = advice.icon;
+                document.getElementById('adviceCategory').textContent = advice.category;
+                document.getElementById('adviceCategory').style.background = advice.color;
+                document.getElementById('adviceSummary').textContent = advice.summary;
+                
+                document.getElementById('wisdomTitle').textContent = advice.ancientWisdom.title;
+                document.getElementById('wisdomQuote').textContent = advice.ancientWisdom.quote;
+                document.getElementById('wisdomPinyin').textContent = advice.ancientWisdom.pinyin;
+                document.getElementById('wisdomTranslation').textContent = advice.ancientWisdom.translation;
+                
+                // Render recommendations
+                const recContainer = document.getElementById('recommendationsContainer');
+                recContainer.innerHTML = '';
+                advice.recommendations.forEach(rec => {
+                    const div = document.createElement('div');
+                    div.className = 'recommendation-item';
+                    div.innerHTML = `
+                        <h5>${rec.title}</h5>
+                        <p>${rec.description}</p>
+                        <div class="action">💡 <strong>Aksi:</strong> ${rec.action}</div>
+                    `;
+                    recContainer.appendChild(div);
+                });
+                
+                // Render things to avoid
+                const avoidList = document.getElementById('avoidList');
+                avoidList.innerHTML = '';
+                advice.thingsToAvoid.forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = item;
+                    avoidList.appendChild(li);
+                });
+                
+                document.getElementById('timelineText').textContent = advice.timeline;
+                document.getElementById('adviceSection').style.display = 'block';
+                
             } else {
                 document.getElementById('fortuneDescription').textContent = "Maaf, ramalan untuk berat tulang ini belum tersedia.";
                 document.getElementById('originalTextSection').style.display = 'none';
+                document.getElementById('adviceSection').style.display = 'none';
             }
 
             document.getElementById('resultSection').style.display = 'block';
